@@ -1,29 +1,49 @@
-<h1>ショピングカート</h1
-<table class="teble">
+<h1>ショピングカート</h1>
+<%= link_to "カートを空にする", destroy_all_path,class: "btn btn-danger", method: :delete %>
+<table class="table table-bordered">
   <thead>
     <tr>
-     <th　class= "bg-light">商品名</th>
-     <th　class= "bg-light">単価（税込）</th>
-     <th　class= "bg-light">数量</th>
-     <th　class= "bg-light">小計</th>
-     <thclass= "bg-light"></th>
+     <th class= "bg-light">商品名</th>
+     <th class= "bg-light">単価（税込）</th>
+     <th class= "bg-light">数量</th>
+     <th class= "bg-light">小計</th>
+     <th class= "bg-light"></th>
     </tr>
   </thead>
   <tbody>
+      <% @cart_items.each do |cart_item| %>
     <tr>
-        <td>内容1</td>
-        <td>内容2</td>
-        <td>内容1</td>
-        <td>内容2</td>
-        <td>内容1</td>
+        <td><%=image_tag cart_item.item.image %><%= cart_item.item.name %></td>
+        <td><%= cart_item.item.price %></td>
+        <%=form_with model: cart_item,url: cart_item_path(cart_item), method: :patch do |f| %>
+        <td><%= f.select :amount,*[1..10] %><%= f.submit '変更',class: "btn btn-success" %></td>
+        <% end %>
+        <td><%= cart_item.item.price*cart_item.amount %></td>
+        <td><%= link_to "削除する", cart_item_path(cart_item.id),class: "btn btn-danger", method: :delete %></td>
     </tr>
+    <% @total +=cart_item.item.price*cart_item.amount %>
+    <% end %>
   </tbody>
 </table>
 <table class="teble">
   <thead>
     <tr>
-     <th　class= "bg-light">合計金額</th>
+     <th class= "bg-light">合計金額</th>
      <th></th>
     </tr>
   </thead>
   </table>
+  <table>
+  <thead> <tr>
+      <th class= "bg-light">合計金額</th>
+      <th><%=@total %></th>
+  </tr>
+  </thead>
+   
+      
+      
+  </table>
+  
+  <%= link_to "買い物を続ける",  root_path,class: "btn btn-primary" %>
+  <%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
+  

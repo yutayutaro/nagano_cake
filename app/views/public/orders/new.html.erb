@@ -1,0 +1,24 @@
+<h1 class= "bg-light">注文情報入力</h1>
+<%= form_with model: @order, url:orders_confirmation_path do |f| %>
+<h2>支払い方法</h2>
+<%= f.radio_button :payment_method, "credit_card" %>
+<%= f.label :payment_method, "クレジットカード" %>
+<%= f.radio_button :payment_method, "transfer" %>
+<%= f.label :payment_method, "銀行振込" %>
+
+<h2>お届け先</h2>
+<%= f.radio_button :address_select, 1 %>
+<%= f.label :address_select, "ご自身の住所" %>
+<%= current_customer.address_display %>
+
+<%= f.radio_button :address_select, 2 %>
+<%= f.label :address_select, "ご自身の住所" %>
+<%= f.select :address_select, options_from_collection_for_select(Address.all, :id, :address_display) %>
+<%= f.label :address_select, "新しいお届け先" %>
+
+<%= f.radio_button :address_select, 3 %>
+<div>郵便番号（ハイフンなし）</div><%=f.text_field :postal_code,placeholder: "0000000"%>
+<div>住所</div><%=f.text_field :address,placeholder: "東京都渋谷区代々木神園町0-0"%>
+<div>宛名</div><%=f.text_field :name,placeholder: "令和道子"%>
+<%= f.submit '確認画面へ進む', class: "btn btn-primary"%>
+<% end %>

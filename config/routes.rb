@@ -13,22 +13,25 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
 
-  scope module: :public do    
+  scope module: :public do   
+    get '/customers/mypage' => "customers#show"
+    get '/customers/mypage/edit' => "customers#edit"
+    patch '/customers/withdraw'=>"customers#withdraw" 
+    patch '/customers/mypage' => "customers#update"
+    get '/customers/confirmation'=>"customers#confirmation"  
+    delete '/cart_items/destroy_all'=>"cart_items#destroy_all", as: 'destroy_all'
+    get   '/orders/completion'=>"orders#completion"
+    post  '/orders/confirmation'=>"orders#confirmation"
+   
     resources :homes
     resources :items
     resources :registrations
-
-    resources :customers
     resources :cart_items
     resources :orders
     resources :addresses
     root to: "homes#top"
   get '/about'=>"homes#about"
-  get '/customers/confirmation'=>"customers#confirmation" 
-  patch '/customers/withdraw'=>"customers#withdraw" 
-  delete '/cart_items/destroy_all'=>"customers#destroy_all"
-  post  '/orders/confirmation'=>"orders#confirmation"
-  get   '/orders/completion'=>"orders#completion"
+
 end
     namespace :admin do
     resources :items

@@ -1,6 +1,6 @@
 <h1>マイページ</h1>
 <span>登録順</span>
-    <%= link_to "編集する", edit_customer_path(params[:id]), class: "btn btn-success" %>
+    <%= link_to "編集する", customers_mypage_edit_path, class: "btn btn-success" %>
 
 
 
@@ -42,7 +42,7 @@
 
 
 <span>配送先</span>
-    <%= link_to "一覧を見る", edit_customer_path(params[:id]), class: "btn btn-primary" %>
+    <%= link_to "一覧を見る", addresses_path, class: "btn btn-primary" %>
     
 <span>注文履歴</span>
     <%= link_to "一覧を見る", orders_path(params[:id]), class: "btn btn-primary" %>
